@@ -1,4 +1,4 @@
-namespace addreesbook_avtotest
+namespace WebAdressbokkTests
 {
     public class UnitTest1
     {
