@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebAdressbokkTests
 {
-    internal class ContactData
+    public class ContactData
     {
         private string firstname;
         private string secondname = "";
