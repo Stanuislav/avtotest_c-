@@ -11,7 +11,7 @@ using Assert = NUnit.Framework.Assert;
 namespace WebAdressbokkTests
 {
     [TestFixture]
-    public class ContactCreationTests
+    public class GroupRemovalTests
     {
         private IWebDriver driver;
         private StringBuilder verificationErrors;
@@ -41,19 +41,15 @@ namespace WebAdressbokkTests
         }
 
         [Test]
-        public void ContactCreationTest()
+        public void GroupRemovalTest()
         {
             OpenHomePage();
             Login(new AccountData("admin", "secret"));
-            ButtonNewContact();
-            ContactData contactData = new ContactData("stasca");
-            contactData.Secondname = "Vesta";
-            contactData.Lastname = "Shurk";
-            FillContactForm(contactData);
-            SumbitContactCreation();
-            ReturnHomePage();
-            Logout(); 
-
+            GoToGroupPage();
+            SelectGroup(1);
+            RemoveGrops();
+            ReturnGroouPage();
+            Logout();
         }
 
         private void Logout()
@@ -61,32 +57,24 @@ namespace WebAdressbokkTests
             driver.FindElement(By.LinkText("Logout")).Click();
         }
 
-        private void ReturnHomePage()
+        private void ReturnGroouPage()
         {
-            driver.FindElement(By.LinkText("home page")).Click();
+            driver.FindElement(By.LinkText("group page")).Click();
         }
 
-        private void SumbitContactCreation()
+        private void RemoveGrops()
         {
-            driver.FindElement(By.XPath("//div[@id='content']/form/input[21]")).Click();
+            driver.FindElement(By.XPath("//div[@id='content']/form/input[5]")).Click();
         }
 
-        private void FillContactForm(ContactData contactData)
+        private void SelectGroup(int index)
         {
-            driver.FindElement(By.Name("firstname")).Click();
-            driver.FindElement(By.Name("firstname")).Clear();
-            driver.FindElement(By.Name("firstname")).SendKeys(contactData.Firstname);
-            driver.FindElement(By.Name("middlename")).Click();
-            driver.FindElement(By.Name("middlename")).Clear();
-            driver.FindElement(By.Name("middlename")).SendKeys(contactData.Secondname);
-            driver.FindElement(By.Name("lastname")).Click();
-            driver.FindElement(By.Name("lastname")).Clear();
-            driver.FindElement(By.Name("lastname")).SendKeys(contactData.Lastname);
+            driver.FindElement(By.XPath("//div[@id='content']/form/span[ " + index + "]/input")).Click();
         }
 
-        private void ButtonNewContact()
+        private void GoToGroupPage()
         {
-            driver.FindElement(By.LinkText("add new")).Click();
+            driver.FindElement(By.LinkText("groups")).Click();
         }
 
         private void OpenHomePage()
@@ -105,8 +93,6 @@ namespace WebAdressbokkTests
             driver.FindElement(By.Id("LoginForm")).Click();
             driver.FindElement(By.XPath("//input[@value='Login']")).Click();
         }
-
-
 
         private bool IsElementPresent(By by)
         {
