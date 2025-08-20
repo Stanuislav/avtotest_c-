@@ -7,32 +7,31 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using Assert = NUnit.Framework.Assert;
+using WebAdressbokkTests;
 
 namespace WebAdressbokkTests
-{
+{ 
     [TestFixture]
     public class ContactCreationTests : TestBase
     {
-        
+
         [Test]
         public void ContactCreationTest()
         {
-            OpenHomePage();
-            Login(new AccountData("admin", "secret"));
-            ButtonNewContact();
+            
             ContactData contactData = new ContactData("stasca");
             contactData.Secondname = "Vesta";
             contactData.Lastname = "Shurk";
-            FillContactForm(contactData);
-            SumbitContactCreation();
-            ReturnHomePage();
-            Logout(); 
+
+            app.Contacts.Create(contactData);
+            
+            app.Auth.Logout();
 
         }
 
 
 
- 
-      
+
+
     }
 }
