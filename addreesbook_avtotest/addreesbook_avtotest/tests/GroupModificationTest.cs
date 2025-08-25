@@ -4,24 +4,25 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using WebAdressbokkTests;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using Assert = NUnit.Framework.Assert;
 
-namespace WebAdressbokkTests
+namespace WebAdressbokkTests.tests
 {
     [TestFixture]
-    public class GroupRemovalTests : TestBase
+    public class GroupModificationTests : TestBase
     {
 
-
         [Test]
-        public void GroupRemovalTest()
+        public void GroupModificationTest ()
         {
-            app.Groups.RemoveGrops(1);
-            
-            app.Auth.Logout();
+            GroupData newData = new GroupData("12");
+            newData.Header = "Class12";
+            newData.Footer = "Peter12";
+
+            app.Groups.Modification(1, newData);
+
         }
 
     }

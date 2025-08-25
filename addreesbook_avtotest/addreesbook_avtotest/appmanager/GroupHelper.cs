@@ -81,6 +81,27 @@ namespace WebAdressbokkTests
             return this;
         }
 
+        public GroupHelper Modification (int index, GroupData newData )
+        {
+            manager.Navigation.GoToGroupPage();
+            SelectGroup(index);
+            EditGroups();
+            FilGroupForm(newData);
+            UpdateGroup();
+            ReturnGroupPage();
+            return this;
+        }
 
+        public GroupHelper EditGroups()
+        {
+            driver.FindElement(By.Name("edit")).Click();
+            return this;
+        }
+
+        public GroupHelper UpdateGroup()
+        {
+            driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
     }
 }
