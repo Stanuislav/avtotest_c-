@@ -7,7 +7,6 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using Assert = NUnit.Framework.Assert;
-using WebAdressbokkTests;
 
 namespace WebAdressbokkTests
 {
@@ -21,10 +20,9 @@ namespace WebAdressbokkTests
         protected GroupHelper groupHelper;
         protected ContactHelper contactHelper;
 
+        private static ThreadLocal<ApplicationManager>  app = new ThreadLocal<ApplicationManager>();
 
-
-
-        public ApplicationManager()
+        private ApplicationManager()
         {
             driver = new FirefoxDriver();
             baseURL = "http://localhost/addressbook";
@@ -33,6 +31,29 @@ namespace WebAdressbokkTests
             navigator = new NavigationHelper(this, baseURL);
             groupHelper = new GroupHelper(this);
             contactHelper = new ContactHelper(this);
+        }
+
+        public static ApplicationManager GetInstance()
+        {
+            if ( !app.IsValueCreated)
+            {
+                app.Value = new ApplicationManager();
+              
+            }
+            return app.Value;
+        }
+
+        ~ApplicationManager()
+        {
+            try
+            {
+                driver.Quit();
+            }
+            catch (Exception)
+            {
+                // Ignore errors if unable to close the browser
+            }
+            //Assert.AreEqual("", verificationErrors.ToString());
         }
 
         public IWebDriver Driver
@@ -60,18 +81,7 @@ namespace WebAdressbokkTests
             get { return contactHelper; }
         }
 
-        public void Stop()
-        {
-            try
-            {
-                driver.Quit();
-            }
-            catch (Exception)
-            {
-                // Ignore errors if unable to close the browser
-            }
-            //Assert.AreEqual("", verificationErrors.ToString());
-        }
+
 
     }
 }
