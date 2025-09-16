@@ -8,10 +8,10 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using Assert = NUnit.Framework.Assert;
 
-namespace WebAdressbokkTests.tests
+namespace WebAdressbokkTests
 {
     [TestFixture]
-    public class ContactModificationTests:TestBase
+    public class ContactModificationTests: AuthTestBase
     {
         [Test]
         public void ContactModificationTest ()

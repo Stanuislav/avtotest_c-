@@ -12,7 +12,7 @@ using Assert = NUnit.Framework.Assert;
 namespace WebAdressbokkTests
 {
     [TestFixture]
-    public class GroupCreationTests : TestBase
+    public class GroupCreationTests : AuthTestBase
     {
 
 
@@ -25,7 +25,7 @@ namespace WebAdressbokkTests
 
             app.Groups.Create(group);
 
-            app.Auth.Logout();
+            //app.Auth.Logout();
         }
 
 
@@ -38,7 +38,7 @@ namespace WebAdressbokkTests
 
             app.Groups.Create(group);
  
-            app.Auth.Logout();
+            //app.Auth.Logout();
         }
 
 

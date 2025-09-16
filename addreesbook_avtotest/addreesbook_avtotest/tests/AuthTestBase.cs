@@ -10,17 +10,15 @@ using Assert = NUnit.Framework.Assert;
 
 namespace WebAdressbokkTests
 {
-    [SetUpFixture]
-    public class TestSuiteFixture
+    public class AuthTestBase : TestBase
     {
-        [OneTimeSetUp]
-        public void InitApplicationManager()
+        [SetUp]
+        public void SetupLogin()
         {
-            ApplicationManager app = ApplicationManager.GetInstance();
-            app.Navigation.OpenHomePage();
             app.Auth.Login(new AccountData("admin", "secret"));
         }
 
+      
 
     }
 }

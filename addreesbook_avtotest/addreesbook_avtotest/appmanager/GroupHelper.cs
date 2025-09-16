@@ -69,6 +69,12 @@ namespace WebAdressbokkTests
         public GroupHelper RemoveGrops (int p)
         {
             manager.Navigation.GoToGroupPage();
+
+            if (!IsElementPresent(By.Name("selected[]")))
+            {
+                Create(new GroupData("111"));
+            }
+
             SelectGroup(p);
             RemoveGrops();
             ReturnGroupPage();
@@ -79,6 +85,12 @@ namespace WebAdressbokkTests
         {
             manager.Navigation.GoToGroupPage();
             SelectGroup(index);
+
+            if (!IsElementPresent(By.Name("selected[]")))
+            {
+                Create(new GroupData("111"));
+            }
+
             EditGroups();
             FilGroupForm(newData);
             UpdateGroup();

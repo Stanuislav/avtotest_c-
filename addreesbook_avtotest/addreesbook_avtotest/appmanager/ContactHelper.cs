@@ -31,16 +31,27 @@ namespace WebAdressbokkTests
 
         public ContactHelper Modification(int index, ContactData newData)
         {
-            manager.Navigation.OpenHomePage();
+            //manager.Navigation.OpenHomePage();
+            if (!IsElementPresent(By.LinkText("Details")))
+            {
+                Create(new ContactData("shurkov"));
+            }
+
             SelectModificationContact(index);
             FillContactForm(newData);
             UpdateContact();
+
             return this;
         }
 
         public ContactHelper ContactDelete(int index)
         {
-            manager.Navigation.OpenHomePage();
+            //manager.Navigation.OpenHomePage();
+            if (!IsElementPresent(By.LinkText("Details")))
+            {
+                Create(new ContactData("shurkov"));
+            }
+
             SelectDeleteContact(index);
             SumbitDeleteContact();
             manager.Navigation.OpenHomePage();

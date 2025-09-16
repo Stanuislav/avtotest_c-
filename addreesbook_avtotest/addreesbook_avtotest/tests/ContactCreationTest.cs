@@ -12,7 +12,7 @@ using WebAdressbokkTests;
 namespace WebAdressbokkTests
 { 
     [TestFixture]
-    public class ContactCreationTests : TestBase
+    public class ContactCreationTests : AuthTestBase
     {
 
         [Test]
@@ -25,7 +25,7 @@ namespace WebAdressbokkTests
 
             app.Contacts.Create(contactData);
             
-            app.Auth.Logout();
+            //app.Auth.Logout();
 
         }
 

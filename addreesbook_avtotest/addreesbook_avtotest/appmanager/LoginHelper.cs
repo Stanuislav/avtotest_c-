@@ -22,6 +22,17 @@ namespace WebAdressbokkTests
        
         public void Login(AccountData account)
         {
+            if (isLoggedIn())
+            {
+                if (isLoggedIn(account))
+                {
+                    return;
+                }
+
+                Logout();
+            }
+
+
             Type(By.Name("user"), account.Username);
             Type(By.Name("pass"), account.Password);
 
@@ -32,9 +43,25 @@ namespace WebAdressbokkTests
             driver.FindElement(By.XPath("//input[@value='Login']")).Click();
         }
 
+        public bool isLoggedIn()
+        {
+            return IsElementPresent(By.Name("logout"));
+        }
+
+        public bool isLoggedIn(AccountData account)
+        {
+            return isLoggedIn()
+            && driver.FindElement(By.Name("logout")).FindElement(By.TagName("b")).Text 
+                == "(" + account.Username + ")"; 
+        }
+
         public void Logout()
         {
-            driver.FindElement(By.LinkText("Logout")).Click();
+            if (isLoggedIn())
+            { 
+                driver.FindElement(By.LinkText("Logout")).Click();  
+            }
+            
         }
     }
 }
