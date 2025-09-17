@@ -14,6 +14,16 @@ namespace WebAdressbokkTests
         [Test]
         public void ContactRemovalTest()
         {
+            app.Navigation.OpenHomePage();
+
+            var count = app.Driver.FindElements(By.XPath("//div[@id='content']/form/table/tbody/tr")) ;
+
+            if (count.Count < 2)
+            {
+                app.Contacts.Create(new ContactData("shurkov"));
+            }
+
+            
             app.Contacts.ContactDelete(1);
         }
     }

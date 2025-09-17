@@ -32,10 +32,6 @@ namespace WebAdressbokkTests
         public ContactHelper Modification(int index, ContactData newData)
         {
             //manager.Navigation.OpenHomePage();
-            if (!IsElementPresent(By.LinkText("Details")))
-            {
-                Create(new ContactData("shurkov"));
-            }
 
             SelectModificationContact(index);
             FillContactForm(newData);
@@ -47,11 +43,6 @@ namespace WebAdressbokkTests
         public ContactHelper ContactDelete(int index)
         {
             //manager.Navigation.OpenHomePage();
-            if (!IsElementPresent(By.LinkText("Details")))
-            {
-                Create(new ContactData("shurkov"));
-            }
-
             SelectDeleteContact(index);
             SumbitDeleteContact();
             manager.Navigation.OpenHomePage();

@@ -6,7 +6,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
-using Assert = NUnit.Framework.Assert;
+
 
 
 namespace WebAdressbokkTests
@@ -23,7 +23,12 @@ namespace WebAdressbokkTests
             group.Header = "Class";
             group.Footer = "Peter";
 
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
             app.Groups.Create(group);
+
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            Assert.That(oldGroups.Count + 1, Is.EqualTo(newGroups.Count));
 
             //app.Auth.Logout();
         }
@@ -36,8 +41,13 @@ namespace WebAdressbokkTests
             group.Header = "";
             group.Footer = "";
 
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
             app.Groups.Create(group);
- 
+
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            Assert.That(oldGroups.Count + 1, Is.EqualTo(newGroups.Count));
+
             //app.Auth.Logout();
         }
 

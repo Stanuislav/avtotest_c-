@@ -23,6 +23,7 @@ namespace WebAdressbokkTests
             return this;
         }
 
+
         public GroupHelper InitNweGroupCreation()
         {
             driver.FindElement(By.Name("new")).Click();
@@ -69,12 +70,6 @@ namespace WebAdressbokkTests
         public GroupHelper RemoveGrops (int p)
         {
             manager.Navigation.GoToGroupPage();
-
-            if (!IsElementPresent(By.Name("selected[]")))
-            {
-                Create(new GroupData("111"));
-            }
-
             SelectGroup(p);
             RemoveGrops();
             ReturnGroupPage();
@@ -109,5 +104,19 @@ namespace WebAdressbokkTests
             driver.FindElement(By.Name("update")).Click();
             return this;
         }
+        public List<GroupData> GetGroupList()
+        {
+            List<GroupData> groups = new List<GroupData> ();
+            manager.Navigation.GoToGroupPage();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+            foreach (IWebElement element in elements)
+            {
+                groups.Add(new GroupData(element.Text));
+            }
+
+            return groups;
+        }
     }
+
+
 }

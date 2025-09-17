@@ -20,6 +20,15 @@ namespace WebAdressbokkTests
             newContactData.Secondname = "Alex";
             newContactData.Lastname = "Pindur";
 
+            app.Navigation.OpenHomePage();
+
+            var count = app.Driver.FindElements(By.XPath("//div[@id='content']/form/table/tbody/tr"));
+
+            if (count.Count < 2)
+            {
+                app.Contacts.Create(new ContactData("shurkov"));
+            }
+
             app.Contacts.Modification(1, newContactData);
         }
 
