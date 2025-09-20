@@ -27,6 +27,9 @@ namespace WebAdressbokkTests
 
             app.Groups.Create(group);
 
+
+            Assert.That(oldGroups.Count + 1, Is.EqualTo(app.Groups.GetGroupCount()));
+
             List<GroupData> newGroups = app.Groups.GetGroupList();
             oldGroups.Add(group);
             oldGroups.Sort();
@@ -47,6 +50,8 @@ namespace WebAdressbokkTests
             List<GroupData> oldGroups = app.Groups.GetGroupList();
 
             app.Groups.Create(group);
+
+            Assert.That(oldGroups.Count + 1, Is.EqualTo(app.Groups.GetGroupCount()));
 
             List<GroupData> newGroups = app.Groups.GetGroupList();
             oldGroups.Add(group);

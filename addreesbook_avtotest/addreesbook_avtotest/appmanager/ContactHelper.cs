@@ -36,6 +36,7 @@ namespace WebAdressbokkTests
             SelectModificationContact(index);
             FillContactForm(newData);
             UpdateContact();
+            manager.Navigation.ReturnHomePage();
 
             return this;
         }
@@ -49,21 +50,35 @@ namespace WebAdressbokkTests
             return this;
         }
 
+        private List<ContactData> contactCash = null;
+
         public List<ContactData> GetContactList()
         {
-            List<ContactData> contacts = new List<ContactData>();
-            manager.Navigation.OpenHomePage();
-            ICollection<IWebElement> elements = driver.FindElements(By.XPath("//div[@id='content']/form[@name='MainForm']/table/tbody/tr[@name='entry']"));
-            foreach (IWebElement element in elements)
+            if (contactCash == null)
             {
-                IList<IWebElement> td = element.FindElements(By.TagName("td"));
-                string lastName = td[2].Text;
-                string firstName = td[1].Text;
+                contactCash = new List<ContactData>();
+                manager.Navigation.OpenHomePage();
+                ICollection<IWebElement> elements = driver.FindElements(By.XPath("//div[@id='content']/form[@name='MainForm']/table/tbody/tr[@name='entry']"));
+                foreach (IWebElement element in elements)
+                {
+                    IList<IWebElement> td = element.FindElements(By.TagName("td"));
+                    string lastName = td[2].Text;
+                    string firstName = td[1].Text;
 
-                contacts.Add(new ContactData(lastName, firstName));
+                    contactCash.Add(new ContactData(lastName, firstName)
+                    {
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("id")
+                    }) ;
+                }
             }
 
-            return contacts;
+            return new List<ContactData>(contactCash);
+        }
+
+        public int GetContactGount()
+        {
+
+            return driver.FindElements(By.XPath("//div[@id='content']/form[@name='MainForm']/table/tbody/tr[@name='entry']")).Count();
         }
 
         public ContactHelper SelectDeleteContact(int indexd)
@@ -78,12 +93,14 @@ namespace WebAdressbokkTests
         public ContactHelper SumbitDeleteContact()
         {
             driver.SwitchTo().Alert().Accept();
+            contactCash = null;
             return this;
         }
 
         public ContactHelper UpdateContact()
         {
             driver.FindElement(By.Name("update")).Click();
+            contactCash = null;
             return this;
         }
 
@@ -97,6 +114,7 @@ namespace WebAdressbokkTests
         public ContactHelper SumbitContactCreation()
         {
             driver.FindElement(By.XPath("//div[@id='content']/form/input[21]")).Click();
+            contactCash = null;
             return this;
         }
 

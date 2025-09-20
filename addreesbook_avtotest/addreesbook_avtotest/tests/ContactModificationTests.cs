@@ -22,17 +22,20 @@ namespace WebAdressbokkTests
 
             app.Navigation.OpenHomePage();
 
-            var count = app.Driver.FindElements(By.XPath("//div[@id='content']/form/table/tbody/tr"));
+            var countContact = app.Driver.FindElements(By.XPath("//div[@id='content']/form/table/tbody/tr"));
 
-            if (count.Count < 2)
+            if (countContact.Count < 2)
             {
                 app.Contacts.Create(new ContactData("shurkov", "stas"));
             }
 
             List<ContactData> oldContacts = app.Contacts.GetContactList();
+            ContactData toBeContactModify = oldContacts[0];
 
-
+           
             app.Contacts.Modification(0, newContactData);
+            
+            Assert.That(oldContacts.Count, Is.EqualTo(app.Contacts.GetContactGount()));
 
             List<ContactData> newContacts = app.Contacts.GetContactList();
             oldContacts[0].Firstname = newContactData.Firstname;
@@ -41,6 +44,15 @@ namespace WebAdressbokkTests
             newContacts.Sort();
 
             Assert.That(oldContacts, Is.EqualTo(newContacts));
+
+            foreach (ContactData contact in newContacts)
+            {
+                if (contact.Id == toBeContactModify.Id)
+                {
+                    Assert.That(newContactData.Firstname, Is.EqualTo(contact.Firstname));
+                    Assert.That(newContactData.Lastname, Is.EqualTo(contact.Lastname));
+                }
+            }
         }
 
     }

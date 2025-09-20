@@ -24,6 +24,8 @@ namespace WebAdressbokkTests
 
             app.Contacts.Create(contacts);
 
+            Assert.That(oldContacts.Count+1, Is.EqualTo(app.Contacts.GetContactGount()));
+
             List<ContactData> newContacts = app.Contacts.GetContactList();
             oldContacts.Add(contacts);
             oldContacts.Sort();

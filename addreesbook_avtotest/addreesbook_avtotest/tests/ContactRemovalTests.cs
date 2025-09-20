@@ -24,8 +24,13 @@ namespace WebAdressbokkTests
             }
 
             List<ContactData> oldContacts = app.Contacts.GetContactList();
+            ContactData toBeContactRevome = oldContacts[0];
 
             app.Contacts.ContactDelete(0);
+            
+
+            Assert.That(oldContacts.Count - 1, Is.EqualTo(app.Contacts.GetContactGount()));
+
             List<ContactData> newContacts = app.Contacts.GetContactList();
 
             oldContacts.RemoveAt(0);
@@ -33,6 +38,11 @@ namespace WebAdressbokkTests
             newContacts.Sort();
 
             Assert.That(oldContacts, Is.EqualTo(newContacts));
+
+            foreach(ContactData contact in newContacts)
+            {
+                Assert.That(contact.Id, Is.Not.EqualTo(toBeContactRevome.Id));
+            }
         }
     }
 }

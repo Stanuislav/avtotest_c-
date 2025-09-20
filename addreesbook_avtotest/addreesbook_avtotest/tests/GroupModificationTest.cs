@@ -31,8 +31,11 @@ namespace WebAdressbokkTests
             }
 
             List<GroupData> oldGroups = app.Groups.GetGroupList();
+            GroupData oldData = oldGroups[0];
 
             app.Groups.Modification(0, newData);
+
+            Assert.That(oldGroups.Count, Is.EqualTo(app.Groups.GetGroupCount()));
 
             List<GroupData> newGroups = app.Groups.GetGroupList();
 
@@ -41,6 +44,14 @@ namespace WebAdressbokkTests
             newGroups.Sort();
 
             Assert.That(oldGroups, Is.EqualTo(newGroups));
+
+            foreach(GroupData group in newGroups)
+            {
+                if (group.Id == oldData.Id)
+                {
+                    Assert.That(newData.Name, Is.EqualTo(group.Name));
+                }
+            }
 
         }
 

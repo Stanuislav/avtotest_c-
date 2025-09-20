@@ -9,14 +9,14 @@ namespace WebAdressbokkTests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
-        private string firstname;
+
         private string secondname = "";
-        private string lastname;
+
 
         public ContactData(string firstname, string lastname)
         {
-            this.firstname = firstname;
-            this.lastname = lastname;
+            Firstname = firstname;
+            Lastname = lastname;
         }
 
         public bool Equals(ContactData other)
@@ -29,17 +29,17 @@ namespace WebAdressbokkTests
             {
                 return true;
             }
-            return firstname == other.firstname && lastname == other.lastname;
+            return Firstname == other.Firstname && Lastname == other.Lastname;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(firstname, lastname); ;
+            return HashCode.Combine(Firstname, Lastname); ;
         }
 
         public override string ToString()
         {
-            return $"firstname={firstname} lastname={lastname}";
+            return $"firstname={Firstname} lastname={Lastname}";
         }
 
         public int CompareTo(ContactData other)
@@ -48,19 +48,19 @@ namespace WebAdressbokkTests
             {
                 return 1;
             }
-            int firstnameCompare = firstname.CompareTo(other.firstname);
+            int firstnameCompare = Firstname.CompareTo(other.Firstname);
             if (firstnameCompare != 0)
             {
                 return firstnameCompare;
             }
-            return lastname.CompareTo(other.lastname);
+            return Firstname.CompareTo(other.Firstname);
         }
 
 
-        public string Firstname { get { return firstname; } set { firstname = value; } }
-        public string Secondname { get { return secondname; } set { secondname = value; } }
-        public string Lastname { get { return lastname; } set { lastname = value; } }
-
+        public string Firstname { get; set; }
+        public string Secondname { get; set; }
+        public string Lastname { get; set; }
+        public string Id { get; set; }
 
     }
 }

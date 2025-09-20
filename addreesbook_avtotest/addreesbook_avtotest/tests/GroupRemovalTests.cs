@@ -29,7 +29,11 @@ namespace WebAdressbokkTests
 
             List<GroupData> oldGroups = app.Groups.GetGroupList();
 
+            GroupData toBeRemoved = oldGroups[0];
+
             app.Groups.RemoveGrops(0);
+
+            Assert.That(oldGroups.Count - 1, Is.EqualTo(app.Groups.GetGroupCount()));
 
             List<GroupData> newGroups = app.Groups.GetGroupList();
 
@@ -39,6 +43,10 @@ namespace WebAdressbokkTests
 
             Assert.That(oldGroups, Is.EqualTo(newGroups));
 
+            foreach(GroupData group in newGroups)
+            {
+                Assert.That(group.Id, Is.Not.EqualTo(toBeRemoved.Id));
+            }
             //app.Auth.Logout();
         }
 
