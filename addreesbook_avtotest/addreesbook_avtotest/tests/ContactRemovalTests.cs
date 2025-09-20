@@ -20,11 +20,19 @@ namespace WebAdressbokkTests
 
             if (count.Count < 2)
             {
-                app.Contacts.Create(new ContactData("shurkov"));
+                app.Contacts.Create(new ContactData("shurkov", "stas"));
             }
 
-            
-            app.Contacts.ContactDelete(1);
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
+
+            app.Contacts.ContactDelete(0);
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+
+            oldContacts.RemoveAt(0);
+            oldContacts.Sort();
+            newContacts.Sort();
+
+            Assert.That(oldContacts, Is.EqualTo(newContacts));
         }
     }
 }

@@ -6,8 +6,6 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
-using Assert = NUnit.Framework.Assert;
-using WebAdressbokkTests;
 
 namespace WebAdressbokkTests
 { 
@@ -19,12 +17,20 @@ namespace WebAdressbokkTests
         public void ContactCreationTest()
         {
             
-            ContactData contactData = new ContactData("stasca");
-            contactData.Secondname = "Vesta";
-            contactData.Lastname = "Shurk";
+            ContactData contacts = new ContactData("Shurk", "stas");
+            contacts.Secondname = "vas";
 
-            app.Contacts.Create(contactData);
-            
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
+
+            app.Contacts.Create(contacts);
+
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+            oldContacts.Add(contacts);
+            oldContacts.Sort();
+            newContacts.Sort();
+
+            Assert.That(oldContacts, Is.EqualTo(newContacts));
+
             //app.Auth.Logout();
 
         }

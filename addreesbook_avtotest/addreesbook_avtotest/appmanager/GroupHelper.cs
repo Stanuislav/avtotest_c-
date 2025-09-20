@@ -17,9 +17,53 @@ namespace WebAdressbokkTests
         {
         }
 
+        public GroupHelper Create(GroupData group)
+        {
+            manager.Navigation.GoToGroupPage();
+
+            InitNweGroupCreation();
+            FilGroupForm(group);
+            SumbitGroupCreation();
+            ReturnGroupPage();
+            return this;
+        }
+
+        public GroupHelper RemoveGrops(int p)
+        {
+            manager.Navigation.GoToGroupPage();
+            SelectGroup(p);
+            RemoveGrops();
+            ReturnGroupPage();
+            return this;
+        }
+
+        public GroupHelper Modification(int index, GroupData newData)
+        {
+            manager.Navigation.GoToGroupPage();
+            SelectGroup(index);
+            EditGroups();
+            FilGroupForm(newData);
+            UpdateGroup();
+            ReturnGroupPage();
+            return this;
+        }
+
+        public List<GroupData> GetGroupList()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            manager.Navigation.GoToGroupPage();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+            foreach (IWebElement element in elements)
+            {
+                groups.Add(new GroupData(element.Text));
+            }
+
+            return groups;
+        }
+
         public GroupHelper SelectGroup(int index)
         {
-            driver.FindElement(By.XPath("//div[@id='content']/form/span[ " + index + "]/input")).Click();
+            driver.FindElement(By.XPath("//div[@id='content']/form/span[ " + (index+1) + "]/input")).Click();
             return this;
         }
 
@@ -56,43 +100,7 @@ namespace WebAdressbokkTests
             return this;
         }
 
-        public GroupHelper Create (GroupData group)
-        {
-            manager.Navigation.GoToGroupPage();
-
-            InitNweGroupCreation();
-            FilGroupForm(group);
-            SumbitGroupCreation();
-            ReturnGroupPage();
-            return this;
-        }
-
-        public GroupHelper RemoveGrops (int p)
-        {
-            manager.Navigation.GoToGroupPage();
-            SelectGroup(p);
-            RemoveGrops();
-            ReturnGroupPage();
-            return this;
-        }
-
-        public GroupHelper Modification (int index, GroupData newData )
-        {
-            manager.Navigation.GoToGroupPage();
-            SelectGroup(index);
-
-            if (!IsElementPresent(By.Name("selected[]")))
-            {
-                Create(new GroupData("111"));
-            }
-
-            EditGroups();
-            FilGroupForm(newData);
-            UpdateGroup();
-            ReturnGroupPage();
-            return this;
-        }
-
+       
         public GroupHelper EditGroups()
         {
             driver.FindElement(By.Name("edit")).Click();
@@ -104,18 +112,7 @@ namespace WebAdressbokkTests
             driver.FindElement(By.Name("update")).Click();
             return this;
         }
-        public List<GroupData> GetGroupList()
-        {
-            List<GroupData> groups = new List<GroupData> ();
-            manager.Navigation.GoToGroupPage();
-            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
-            foreach (IWebElement element in elements)
-            {
-                groups.Add(new GroupData(element.Text));
-            }
-
-            return groups;
-        }
+     
     }
 
 

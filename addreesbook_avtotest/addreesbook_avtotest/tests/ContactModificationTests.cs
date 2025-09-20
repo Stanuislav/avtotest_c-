@@ -16,9 +16,9 @@ namespace WebAdressbokkTests
         [Test]
         public void ContactModificationTest ()
         {
-            ContactData newContactData = new ContactData("Olya");
+            ContactData newContactData = new ContactData("Olya", "Pindur");
             newContactData.Secondname = "Alex";
-            newContactData.Lastname = "Pindur";
+
 
             app.Navigation.OpenHomePage();
 
@@ -26,10 +26,21 @@ namespace WebAdressbokkTests
 
             if (count.Count < 2)
             {
-                app.Contacts.Create(new ContactData("shurkov"));
+                app.Contacts.Create(new ContactData("shurkov", "stas"));
             }
 
-            app.Contacts.Modification(1, newContactData);
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
+
+
+            app.Contacts.Modification(0, newContactData);
+
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+            oldContacts[0].Firstname = newContactData.Firstname;
+            oldContacts[0].Lastname = newContactData.Lastname;
+            oldContacts.Sort();
+            newContacts.Sort();
+
+            Assert.That(oldContacts, Is.EqualTo(newContacts));
         }
 
     }

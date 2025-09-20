@@ -49,10 +49,27 @@ namespace WebAdressbokkTests
             return this;
         }
 
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigation.OpenHomePage();
+            ICollection<IWebElement> elements = driver.FindElements(By.XPath("//div[@id='content']/form[@name='MainForm']/table/tbody/tr[@name='entry']"));
+            foreach (IWebElement element in elements)
+            {
+                IList<IWebElement> td = element.FindElements(By.TagName("td"));
+                string lastName = td[2].Text;
+                string firstName = td[1].Text;
+
+                contacts.Add(new ContactData(lastName, firstName));
+            }
+
+            return contacts;
+        }
+
         public ContactHelper SelectDeleteContact(int indexd)
         {
             indexd += 1;
-            driver.FindElement(By.XPath("//div[@id='content']/form[@name='MainForm']/table/tbody/tr[" + indexd  + "]/td/input[@type='checkbox']")).Click();
+            driver.FindElement(By.XPath("//div[@id='content']/form[@name='MainForm']/table/tbody/tr[" + (indexd+1)  + "]/td/input[@type='checkbox']")).Click();
             driver.FindElement(By.XPath("//div[@id='content']/form[@name='MainForm']/div/input[@value='Delete']")).Click();
 
             return this;
@@ -73,7 +90,7 @@ namespace WebAdressbokkTests
         public ContactHelper SelectModificationContact (int index)
         {
             index += 1;
-            driver.FindElement(By.XPath("//div[@id='content']/form[@name='MainForm']/table/tbody/tr[" + index  +"]/td/a/img[@title='Edit']")).Click();
+            driver.FindElement(By.XPath("//div[@id='content']/form[@name='MainForm']/table/tbody/tr[" + (index+1)  +"]/td/a/img[@title='Edit']")).Click();
             return this;
         }
 

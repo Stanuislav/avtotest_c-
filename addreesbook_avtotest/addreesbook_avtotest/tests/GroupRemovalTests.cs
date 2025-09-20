@@ -27,8 +27,18 @@ namespace WebAdressbokkTests
                 app.Groups.Create(new GroupData("111"));
             }
 
-            app.Groups.RemoveGrops(1);
-            
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
+            app.Groups.RemoveGrops(0);
+
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+
+            oldGroups.RemoveAt(0);
+            oldGroups.Sort();
+            newGroups.Sort();
+
+            Assert.That(oldGroups, Is.EqualTo(newGroups));
+
             //app.Auth.Logout();
         }
 

@@ -18,10 +18,11 @@ namespace WebAdressbokkTests
         public void GroupModificationTest ()
         {
             GroupData newData = new GroupData("12");
-            newData.Header = "Class12";
-            newData.Footer = "Peter12";
+            newData.Header = "";
+            newData.Footer = "";
 
             app.Navigation.GoToGroupPage();
+
             var count = app.Driver.FindElements(By.XPath("//div[@id='content']/form/span"));
 
             if (count.Count < 1)
@@ -29,7 +30,17 @@ namespace WebAdressbokkTests
                 app.Groups.Create(new GroupData("111"));
             }
 
-            app.Groups.Modification(1, newData);
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
+            app.Groups.Modification(0, newData);
+
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+
+            oldGroups[0].Name = newData.Name;
+            oldGroups.Sort();
+            newGroups.Sort();
+
+            Assert.That(oldGroups, Is.EqualTo(newGroups));
 
         }
 

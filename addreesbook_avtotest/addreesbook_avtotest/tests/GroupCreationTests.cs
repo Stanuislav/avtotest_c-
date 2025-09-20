@@ -28,7 +28,10 @@ namespace WebAdressbokkTests
             app.Groups.Create(group);
 
             List<GroupData> newGroups = app.Groups.GetGroupList();
-            Assert.That(oldGroups.Count + 1, Is.EqualTo(newGroups.Count));
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.That(oldGroups, Is.EqualTo(newGroups));
 
             //app.Auth.Logout();
         }
@@ -46,7 +49,10 @@ namespace WebAdressbokkTests
             app.Groups.Create(group);
 
             List<GroupData> newGroups = app.Groups.GetGroupList();
-            Assert.That(oldGroups.Count + 1, Is.EqualTo(newGroups.Count));
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.That(oldGroups, Is.EqualTo(newGroups));
 
             //app.Auth.Logout();
         }
