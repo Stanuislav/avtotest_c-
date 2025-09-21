@@ -18,7 +18,7 @@ namespace WebAdressbokkTests
         {
             
             ContactData contacts = new ContactData("Shurk", "stas");
-            contacts.Secondname = "vas";
+            contacts.SecondName = "vas";
 
             List<ContactData> oldContacts = app.Contacts.GetContactList();
 

@@ -4,19 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebAdressbokkTests;
+using System.Text.RegularExpressions;
 
 namespace WebAdressbokkTests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
-
-        private string secondname = "";
-
+        public string allPhons;
 
         public ContactData(string firstname, string lastname)
         {
-            Firstname = firstname;
-            Lastname = lastname;
+            FirstName = firstname;
+            LastName = lastname;
         }
 
         public bool Equals(ContactData other)
@@ -29,17 +28,17 @@ namespace WebAdressbokkTests
             {
                 return true;
             }
-            return Firstname == other.Firstname && Lastname == other.Lastname;
+            return FirstName == other.FirstName && LastName == other.LastName;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Firstname, Lastname); ;
+            return HashCode.Combine(FirstName, LastName); ;
         }
 
         public override string ToString()
         {
-            return $"firstname={Firstname} lastname={Lastname}";
+            return $"firstname={FirstName} lastname={LastName}";
         }
 
         public int CompareTo(ContactData other)
@@ -48,18 +47,49 @@ namespace WebAdressbokkTests
             {
                 return 1;
             }
-            int firstnameCompare = Firstname.CompareTo(other.Firstname);
+            int firstnameCompare = FirstName.CompareTo(other.FirstName);
             if (firstnameCompare != 0)
             {
                 return firstnameCompare;
             }
-            return Firstname.CompareTo(other.Firstname);
+            return FirstName.CompareTo(other.FirstName);
         }
 
 
-        public string Firstname { get; set; }
-        public string Secondname { get; set; }
-        public string Lastname { get; set; }
+        public string FirstName { get; set; }
+        public string SecondName { get; set; }
+        public string LastName { get; set; }
+        public string Address { get; set; }
+        public string HomePhone { get; set; }
+        public string MobilePhone { get; set; }
+        public string WorkPhone { get; set; }
+        public string AllPhons {
+            get 
+            { 
+                if(allPhons != null)
+                {
+                    return allPhons;
+                }
+                else
+                {
+                    return (ClenUp(HomePhone) + ClenUp(MobilePhone) + ClenUp(WorkPhone)).Trim();
+                }
+            }
+            set 
+            { 
+                allPhons = value;
+            }
+        }
+
+        public string ClenUp(string phone)
+        {
+            if (phone == null || phone == "")
+            {
+                return "";
+            }
+            return Regex.Replace(phone, "[ -()]", "") + "\r\n";
+        }
+
         public string Id { get; set; }
 
     }

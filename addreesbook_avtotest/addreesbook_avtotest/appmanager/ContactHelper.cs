@@ -29,6 +29,8 @@ namespace WebAdressbokkTests
             return this;
         }
 
+       
+
         public ContactHelper Modification(int index, ContactData newData)
         {
             //manager.Navigation.OpenHomePage();
@@ -48,6 +50,49 @@ namespace WebAdressbokkTests
             SumbitDeleteContact();
             manager.Navigation.OpenHomePage();
             return this;
+        }
+
+        public ContactData GetContactInformationFromEditForm(int index)
+        {
+            manager.Navigation.OpenHomePage();
+            SelectModificationContact(index);
+            string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
+            string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
+            string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
+            string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+
+            return new ContactData(firstName, lastName)
+            {
+                Address = address,
+                HomePhone = homePhone,
+                MobilePhone = mobilePhone,
+                WorkPhone = workPhone,
+                
+             
+            };
+        }
+
+        public ContactData GetContactInformationFromTable(int index)
+        {
+          
+            manager.Navigation.OpenHomePage();
+            IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"));
+            string lastName = cells[1].Text;
+            string firstName = cells[2].Text;
+            string address = cells[3].Text;
+            string allPhons = cells[5].Text;
+
+            return new ContactData(firstName, lastName)
+            {
+                Address = address,
+                AllPhons = allPhons,
+            };
+
+
+
         }
 
         private List<ContactData> contactCash = null;
@@ -120,9 +165,9 @@ namespace WebAdressbokkTests
 
         public ContactHelper FillContactForm(ContactData contactData)
         {
-            Type(By.Name("firstname"), contactData.Firstname);
-            Type(By.Name("middlename"), contactData.Secondname);
-            Type(By.Name("lastname"), contactData.Lastname);
+            Type(By.Name("firstname"), contactData.FirstName);
+            Type(By.Name("middlename"), contactData.SecondName);
+            Type(By.Name("lastname"), contactData.LastName);
             return this;
         }
 

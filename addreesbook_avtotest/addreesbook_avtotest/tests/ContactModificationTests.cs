@@ -17,7 +17,7 @@ namespace WebAdressbokkTests
         public void ContactModificationTest ()
         {
             ContactData newContactData = new ContactData("Olya", "Pindur");
-            newContactData.Secondname = "Alex";
+            newContactData.SecondName = "Alex";
 
 
             app.Navigation.OpenHomePage();
@@ -38,8 +38,8 @@ namespace WebAdressbokkTests
             Assert.That(oldContacts.Count, Is.EqualTo(app.Contacts.GetContactGount()));
 
             List<ContactData> newContacts = app.Contacts.GetContactList();
-            oldContacts[0].Firstname = newContactData.Firstname;
-            oldContacts[0].Lastname = newContactData.Lastname;
+            oldContacts[0].FirstName = newContactData.FirstName;
+            oldContacts[0].LastName = newContactData.LastName;
             oldContacts.Sort();
             newContacts.Sort();
 
@@ -49,8 +49,8 @@ namespace WebAdressbokkTests
             {
                 if (contact.Id == toBeContactModify.Id)
                 {
-                    Assert.That(newContactData.Firstname, Is.EqualTo(contact.Firstname));
-                    Assert.That(newContactData.Lastname, Is.EqualTo(contact.Lastname));
+                    Assert.That(newContactData.FirstName, Is.EqualTo(contact.FirstName));
+                    Assert.That(newContactData.LastName, Is.EqualTo(contact.LastName));
                 }
             }
         }

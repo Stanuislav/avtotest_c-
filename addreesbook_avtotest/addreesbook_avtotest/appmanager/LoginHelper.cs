@@ -51,8 +51,14 @@ namespace WebAdressbokkTests
         public bool isLoggedIn(AccountData account)
         {
             return isLoggedIn()
-            && driver.FindElement(By.Name("logout")).FindElement(By.TagName("b")).Text 
-                == "(" + account.Username + ")"; 
+            && GetLoggetUserName() == account.Username;
+ 
+        }
+
+        private string GetLoggetUserName()
+        {
+            string text = driver.FindElement(By.Name("logout")).FindElement(By.TagName("b")).Text;
+            return text.Substring(1, text.Length - 2);
         }
 
         public void Logout()
