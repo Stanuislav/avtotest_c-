@@ -38,7 +38,7 @@ namespace WebAdressbokkTests
 
         public override string ToString()
         {
-            return "name=" + Name;
+            return "name=" + Name + "\nheader " + Header + "\footer " + Footer;
         }
 
         public int CompareTo(GroupData other)
