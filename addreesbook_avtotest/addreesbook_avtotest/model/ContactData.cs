@@ -11,6 +11,7 @@ namespace WebAdressbokkTests
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         public string allPhons;
+        public string fio;
 
         public ContactData(string firstname, string lastname)
         {
@@ -88,6 +89,34 @@ namespace WebAdressbokkTests
                 return "";
             }
             return Regex.Replace(phone, "[ -()]", "") + "\r\n";
+        }
+
+        public string Fio
+        {
+            get
+            {
+                if (fio != null)
+                {
+                    return fio;
+                }
+                else
+                {
+                    return (ClenUpFio(FirstName) + ClenUpFio(SecondName) + ClenUpFio(LastName)).Trim();
+                }
+            }
+            set
+            {
+                fio = value;
+            }
+        }
+
+        private string ClenUpFio(string fio)
+        {
+            if (fio == null || fio == "")
+            {
+                return "";
+            }
+            return fio + " ";
         }
 
         public string Id { get; set; }

@@ -57,6 +57,7 @@ namespace WebAdressbokkTests
             manager.Navigation.OpenHomePage();
             SelectModificationContact(index);
             string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string secondName = driver.FindElement(By.Name("middlename")).GetAttribute("value");
             string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
             string address = driver.FindElement(By.Name("address")).GetAttribute("value");
             string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
@@ -66,6 +67,7 @@ namespace WebAdressbokkTests
             return new ContactData(firstName, lastName)
             {
                 Address = address,
+                SecondName = secondName,
                 HomePhone = homePhone,
                 MobilePhone = mobilePhone,
                 WorkPhone = workPhone,
@@ -90,10 +92,37 @@ namespace WebAdressbokkTests
                 Address = address,
                 AllPhons = allPhons,
             };
-
-
-
         }
+
+        public ContactData GetContactDetailsInformationsForm(int index)
+        {
+            manager.Navigation.OpenHomePage();
+            SelectDetailsContact(index);
+            
+            string fullText = driver.FindElement(By.Id("content")).Text;
+            string[] lines = fullText.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(line => line.Trim())
+                .Where(line => !string.IsNullOrEmpty(line))
+                .ToArray();
+
+            string fio = driver.FindElement(By.XPath("//div[@id='content']/b")).Text;
+            string address = lines[1];
+            string homePhone = lines[2].Replace("H:", "").Trim();
+            string mobilePhone = lines[3].Replace("M:", "").Trim();
+            string workPhone = lines[4].Replace("W:", "").Trim();
+
+
+            return new ContactData("", "")
+            {
+                Fio = fio,
+                Address = address,
+                HomePhone = homePhone,
+                MobilePhone = mobilePhone,
+                WorkPhone = workPhone,
+            };
+        }
+
+       
 
         private List<ContactData> contactCash = null;
 
@@ -177,7 +206,14 @@ namespace WebAdressbokkTests
             return this;
         }
 
-       
 
+        public ContactHelper SelectDetailsContact(int index)
+        {
+            manager.Navigation.OpenHomePage();
+            driver.FindElement(By.XPath("//div[@id='content']/form[@name='MainForm']/table/tbody/tr[" + (index + 2) + "]/td/a/img[@title='Details']")).Click();
+            return this;
+
+
+        }
     }
 }
