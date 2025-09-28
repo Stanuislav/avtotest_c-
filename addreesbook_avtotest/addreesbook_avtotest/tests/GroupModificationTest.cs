@@ -11,7 +11,7 @@ using Assert = NUnit.Framework.Assert;
 namespace WebAdressbokkTests
 {
     [TestFixture]
-    public class GroupModificationTests : AuthTestBase
+    public class GroupModificationTests : GroupTestBase
     {
 
         [Test]
@@ -30,14 +30,14 @@ namespace WebAdressbokkTests
                 app.Groups.Create(new GroupData("111"));
             }
 
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
             GroupData oldData = oldGroups[0];
 
-            app.Groups.Modification(0, newData);
+            app.Groups.Modification(oldData, newData);
 
             Assert.That(oldGroups.Count, Is.EqualTo(app.Groups.GetGroupCount()));
 
-            List<GroupData> newGroups = app.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
 
             oldGroups[0].Name = newData.Name;
             oldGroups.Sort();

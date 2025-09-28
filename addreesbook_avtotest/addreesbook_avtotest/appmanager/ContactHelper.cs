@@ -43,10 +43,31 @@ namespace WebAdressbokkTests
             return this;
         }
 
+        public ContactHelper Modification(ContactData contact, ContactData newData)
+        {
+            //manager.Navigation.OpenHomePage();
+
+            SelectModificationContact(contact.Id);
+            FillContactForm(newData);
+            UpdateContact();
+            manager.Navigation.ReturnHomePage();
+
+            return this;
+        }
+
         public ContactHelper ContactDelete(int index)
         {
             //manager.Navigation.OpenHomePage();
             SelectDeleteContact(index);
+            SumbitDeleteContact();
+            manager.Navigation.OpenHomePage();
+            return this;
+        }
+
+        public ContactHelper ContactDelete(ContactData contact)
+        {
+            //manager.Navigation.OpenHomePage();
+            SelectDeleteContact(contact.Id);
             SumbitDeleteContact();
             manager.Navigation.OpenHomePage();
             return this;
@@ -59,7 +80,7 @@ namespace WebAdressbokkTests
             string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
             string secondName = driver.FindElement(By.Name("middlename")).GetAttribute("value");
             string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
-       
+            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
             string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
             string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
             string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
@@ -77,8 +98,9 @@ namespace WebAdressbokkTests
                 Email1 = email1,
                 Email2 = email2,
                 Email3 = email3,
+                Address = address,
 
-        };
+            };
         }
 
         public ContactData GetContactInformationFromTable(int index)
@@ -197,6 +219,14 @@ namespace WebAdressbokkTests
             return this;
         }
 
+        public ContactHelper SelectDeleteContact(string id)
+        {
+            driver.FindElement(By.XPath("//input[@name='selected[]' and @id='" + id + "']")).Click();
+            driver.FindElement(By.XPath("//div[@id='content']/form[@name='MainForm']/div/input[@value='Delete']")).Click();
+
+            return this;
+        }
+
         public ContactHelper SumbitDeleteContact()
         {
             driver.SwitchTo().Alert().Accept();
@@ -215,6 +245,12 @@ namespace WebAdressbokkTests
         {
             index += 1;
             driver.FindElement(By.XPath("//div[@id='content']/form[@name='MainForm']/table/tbody/tr[" + (index+1)  +"]/td/a/img[@title='Edit']")).Click();
+            return this;
+        }
+
+        public ContactHelper SelectModificationContact(string id)
+        {
+            driver.FindElement(By.XPath("//a[@href='edit.php?id=" + id + "']")).Click();
             return this;
         }
 

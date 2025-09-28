@@ -9,7 +9,7 @@ using Assert = NUnit.Framework.Assert;
 namespace WebAdressbokkTests
 {
     [TestFixture]
-    public class ContactRemovalTests : AuthTestBase
+    public class ContactRemovalTests : ContactTestBase
     {
         [Test]
         public void ContactRemovalTest()
@@ -23,15 +23,15 @@ namespace WebAdressbokkTests
                 app.Contacts.Create(new ContactData("shurkov", "stas"));
             }
 
-            List<ContactData> oldContacts = app.Contacts.GetContactList();
+            List<ContactData> oldContacts = ContactData.GetAll();
             ContactData toBeContactRevome = oldContacts[0];
 
-            app.Contacts.ContactDelete(0);
+            app.Contacts.ContactDelete(toBeContactRevome);
             
 
             Assert.That(oldContacts.Count - 1, Is.EqualTo(app.Contacts.GetContactGount()));
 
-            List<ContactData> newContacts = app.Contacts.GetContactList();
+            List<ContactData> newContacts = ContactData.GetAll();
 
             oldContacts.RemoveAt(0);
             oldContacts.Sort();

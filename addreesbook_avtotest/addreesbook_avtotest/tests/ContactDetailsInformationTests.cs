@@ -12,7 +12,7 @@ using Assert = NUnit.Framework.Assert;
 namespace WebAdressbokkTests
 {
     [TestFixture]
-    public class ContactDetailsInformationTests : AuthTestBase
+    public class ContactDetailsInformationTests : ContactTestBase
     {
         [Test]
 

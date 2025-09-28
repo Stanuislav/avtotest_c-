@@ -5,9 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using WebAdressbokkTests;
 using System.Text.RegularExpressions;
+using LinqToDB.Mapping;
 
 namespace WebAdressbokkTests
 {
+    [Table(Name = "addressbook")]
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         public string allPhons;
@@ -60,16 +62,37 @@ namespace WebAdressbokkTests
             return FirstName.CompareTo(other.FirstName);
         }
 
+        [Column(Name = "id"), PrimaryKey]
+        public string Id { get; set; }
 
+        [Column(Name = "firstname"), NotNull]
         public string FirstName { get; set; }
+
+        [Column(Name = "middlename"), NotNull]
         public string SecondName { get; set; }
+
+        [Column(Name = "lastname"), NotNull]
         public string LastName { get; set; }
+
+        [Column(Name = "address"), NotNull]
         public string Address { get; set; }
+
+        [Column(Name = "home"), NotNull]
         public string HomePhone { get; set; }
+
+        [Column(Name = "mobile"), NotNull]
         public string MobilePhone { get; set; }
+
+        [Column(Name = "work"), NotNull]
         public string WorkPhone { get; set; }
+
+        [Column(Name = "email"), NotNull]
         public string Email1 { get; set; }
+
+        [Column(Name = "email2"), NotNull]
         public string Email2 { get; set; }
+
+        [Column(Name = "email3"), NotNull]
         public string Email3 { get; set; }
 
         public string AllPhons {
@@ -127,7 +150,13 @@ namespace WebAdressbokkTests
             return fio + " ";
         }
 
-        public string Id { get; set; }
 
+        public static List<ContactData> GetAll()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from g in db.Contacts select g).ToList();
+            }
+        }
     }
 }

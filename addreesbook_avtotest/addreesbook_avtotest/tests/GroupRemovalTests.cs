@@ -12,7 +12,7 @@ using Assert = NUnit.Framework.Assert;
 namespace WebAdressbokkTests
 {
     [TestFixture]
-    public class GroupRemovalTests : AuthTestBase
+    public class GroupRemovalTests : GroupTestBase
     {
 
 
@@ -27,15 +27,15 @@ namespace WebAdressbokkTests
                 app.Groups.Create(new GroupData("111"));
             }
 
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
 
             GroupData toBeRemoved = oldGroups[0];
 
-            app.Groups.RemoveGrops(0);
+            app.Groups.RemoveGrops(toBeRemoved);
 
             Assert.That(oldGroups.Count - 1, Is.EqualTo(app.Groups.GetGroupCount()));
 
-            List<GroupData> newGroups = app.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
 
             oldGroups.RemoveAt(0);
             oldGroups.Sort();

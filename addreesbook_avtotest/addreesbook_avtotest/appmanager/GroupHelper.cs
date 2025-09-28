@@ -39,10 +39,32 @@ namespace WebAdressbokkTests
             return this;
         }
 
+
+        public GroupHelper RemoveGrops(GroupData group)
+        {
+            manager.Navigation.GoToGroupPage();
+            SelectGroup(group.Id);
+            RemoveGrops();
+            ReturnGroupPage();
+            return this;
+        }
+
+
         public GroupHelper Modification(int index, GroupData newData)
         {
             manager.Navigation.GoToGroupPage();
             SelectGroup(index);
+            EditGroups();
+            FilGroupForm(newData);
+            UpdateGroup();
+            ReturnGroupPage();
+            return this;
+        }
+
+        public GroupHelper Modification(GroupData group, GroupData newData)
+        {
+            manager.Navigation.GoToGroupPage();
+            SelectGroup(group.Id);
             EditGroups();
             FilGroupForm(newData);
             UpdateGroup();
@@ -83,6 +105,11 @@ namespace WebAdressbokkTests
             return this;
         }
 
+        public GroupHelper SelectGroup(string id)
+        {
+            driver.FindElement(By.XPath("//input[@name='selected[]' and @value='"+id+"']")).Click();
+            return this;
+        }
 
         public GroupHelper InitNweGroupCreation()
         {

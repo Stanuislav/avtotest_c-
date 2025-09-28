@@ -11,7 +11,7 @@ using Assert = NUnit.Framework.Assert;
 namespace WebAdressbokkTests
 {
     [TestFixture]
-    public class ContactModificationTests: AuthTestBase
+    public class ContactModificationTests: ContactTestBase
     {
         [Test]
         public void ContactModificationTest ()
@@ -29,15 +29,15 @@ namespace WebAdressbokkTests
                 app.Contacts.Create(new ContactData("shurkov", "stas"));
             }
 
-            List<ContactData> oldContacts = app.Contacts.GetContactList();
+            List<ContactData> oldContacts = ContactData.GetAll();
             ContactData toBeContactModify = oldContacts[0];
 
            
-            app.Contacts.Modification(0, newContactData);
+            app.Contacts.Modification(toBeContactModify, newContactData);
             
             Assert.That(oldContacts.Count, Is.EqualTo(app.Contacts.GetContactGount()));
 
-            List<ContactData> newContacts = app.Contacts.GetContactList();
+            List<ContactData> newContacts = ContactData.GetAll();
             oldContacts[0].FirstName = newContactData.FirstName;
             oldContacts[0].LastName = newContactData.LastName;
             oldContacts.Sort();

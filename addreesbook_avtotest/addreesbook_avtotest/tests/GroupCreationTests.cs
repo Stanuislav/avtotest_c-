@@ -15,7 +15,7 @@ using Newtonsoft.Json;
 namespace WebAdressbokkTests
 {
     [TestFixture]
-    public class GroupCreationTests : AuthTestBase
+    public class GroupCreationTests : GroupTestBase
     {
         public static IEnumerable<GroupData> RandomGroupDataProvider()
         {
@@ -66,14 +66,14 @@ namespace WebAdressbokkTests
         [Test,TestCaseSource("GroupDataFromJsonFile")]
         public void GroupCreationTest(GroupData group)
         {
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
 
             app.Groups.Create(group);
 
 
             Assert.That(oldGroups.Count + 1, Is.EqualTo(app.Groups.GetGroupCount()));
 
-            List<GroupData> newGroups = app.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
@@ -93,6 +93,15 @@ namespace WebAdressbokkTests
              List<GroupData> fronDB = GroupData.GetAll();
              end = DateTime.Now;
             Console.WriteLine("DB " + end.Subtract(start));
+        }
+
+        [Test]
+        public void TestDBConnectivity1()
+        {
+            foreach (ContactData contact in GroupData.GetAll()[0].GetContacts())
+            {
+                Console.WriteLine(contact);
+            }
         }
     }
 }
