@@ -26,8 +26,24 @@ namespace WebAdressbokkTests
             return contact;
         }
 
+        public static IEnumerable<GroupData> ContactDataFromFile()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            string[] lines = File.ReadAllLines(@"groups.csv");
+            foreach (string line in lines)
+            {
+                string[] part = line.Split(',');
+                groups.Add(new GroupData(part[0])
+                {
+                    Header = part[1],
+                    Footer = part[2]
+                });
+            }
+            return groups;
+        }
 
-        [Test, TestCaseSource("RandomGroupDataProvider")]
+
+        [Test, TestCaseSource("ContactDataFromFile")]
         public void ContactCreationTest(ContactData contact)
         {
             List<ContactData> oldContacts = app.Contacts.GetContactList();

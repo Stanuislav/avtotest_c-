@@ -3,7 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "addreesbook_avtotest", "addreesbook_avtotest\addreesbook_avtotest.csproj", "{0564EAA5-1540-43B1-8388-AB4D43E86B86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "addreesbook_avtotest", "addreesbook_avtotest\addreesbook_avtotest.csproj", "{0564EAA5-1540-43B1-8388-AB4D43E86B86}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "addressbook-test-data-ganerators", "addressbook-test-data-ganerators\addressbook-test-data-ganerators.csproj", "{1AB6C196-9431-4346-9D28-DAA2D1E8EC92}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0564EAA5-1540-43B1-8388-AB4D43E86B86} = {0564EAA5-1540-43B1-8388-AB4D43E86B86}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +20,10 @@ Global
 		{0564EAA5-1540-43B1-8388-AB4D43E86B86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0564EAA5-1540-43B1-8388-AB4D43E86B86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0564EAA5-1540-43B1-8388-AB4D43E86B86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AB6C196-9431-4346-9D28-DAA2D1E8EC92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AB6C196-9431-4346-9D28-DAA2D1E8EC92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AB6C196-9431-4346-9D28-DAA2D1E8EC92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AB6C196-9431-4346-9D28-DAA2D1E8EC92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

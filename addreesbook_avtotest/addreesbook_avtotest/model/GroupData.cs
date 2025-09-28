@@ -7,14 +7,18 @@ using WebAdressbokkTests;
 
 namespace WebAdressbokkTests
 {
-    public class GroupData : IEquatable<GroupData> , IComparable<GroupData>
+    public class GroupData : IEquatable<GroupData>, IComparable<GroupData>
     {
-        private string header = "";
-        private string footer = "";
+
 
         public GroupData(string name)
         {
-           Name = name;
+            Name = name;
+
+        }
+
+        public GroupData()
+        {
 
         }
 

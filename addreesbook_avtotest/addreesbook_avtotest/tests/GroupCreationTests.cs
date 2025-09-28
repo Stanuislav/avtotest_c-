@@ -3,10 +3,13 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using NUnit.Framework;
+using System.IO;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
-
+using System.Xml;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 
 namespace WebAdressbokkTests
@@ -28,9 +31,39 @@ namespace WebAdressbokkTests
             return groups;
         }
 
+        public static IEnumerable<GroupData> GroupDataFromCsvFile()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            string[] lines = File.ReadAllLines(@"groups.csv");
+            foreach (string line in lines)
+            {
+                string[] parts = line.Split(';');
+                groups.Add(new GroupData(parts[0])
+                    {
+                        Header = parts[1],
+                        Footer = parts[2]
+                    });
+            }    
+            return groups;
+        }
 
+        public static IEnumerable<GroupData> GroupDataFromXmlFile()
+        {
+            
+            return(List<GroupData>) 
+                new XmlSerializer(typeof(List<GroupData>))
+                .Deserialize(new StreamReader(@"group.xml"));
+            
+        }
 
-        [Test,TestCaseSource("RandomGroupDataProvider")]
+        public static IEnumerable<GroupData> GroupDataFromJsonFile()
+        {
+
+            return JsonConvert.DeserializeObject<List<GroupData>>(File.ReadAllText(@"group.json"));
+
+        }
+
+        [Test,TestCaseSource("GroupDataFromJsonFile")]
         public void GroupCreationTest(GroupData group)
         {
             List<GroupData> oldGroups = app.Groups.GetGroupList();

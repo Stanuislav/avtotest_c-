@@ -19,6 +19,10 @@ namespace WebAdressbokkTests
             LastName = lastname;
         }
 
+        public ContactData()
+        {
+
+        }
         public bool Equals(ContactData other)
         {
             if (Object.ReferenceEquals(this, null))
