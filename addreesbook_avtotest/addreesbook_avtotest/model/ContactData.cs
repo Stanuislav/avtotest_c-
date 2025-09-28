@@ -68,6 +68,10 @@ namespace WebAdressbokkTests
         public string HomePhone { get; set; }
         public string MobilePhone { get; set; }
         public string WorkPhone { get; set; }
+        public string Email1 { get; set; }
+        public string Email2 { get; set; }
+        public string Email3 { get; set; }
+
         public string AllPhons {
             get 
             { 

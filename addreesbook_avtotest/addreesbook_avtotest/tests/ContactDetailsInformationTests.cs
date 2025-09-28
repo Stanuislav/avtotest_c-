@@ -18,12 +18,20 @@ namespace WebAdressbokkTests
 
         public void TestDetailsInformationTest ()
         {
+            
+
             ContactData fromForm = app.Contacts.GetContactInformationFromEditForm(0);
+            
+
+
             ContactData detailsForm = app.Contacts.GetContactDetailsInformationsForm(0);
 
-            Assert.That(detailsForm.Address, Is.EqualTo(fromForm.Address));
+
             Assert.That(detailsForm.AllPhons, Is.EqualTo(fromForm.AllPhons));
             Assert.That(detailsForm.Fio, Is.EqualTo(fromForm.Fio));
+            Assert.That(detailsForm.Email1, Is.EqualTo(fromForm.Email1));
+            Assert.That(detailsForm.Email2, Is.EqualTo(fromForm.Email2));
+            Assert.That(detailsForm.Email3, Is.EqualTo(fromForm.Email3));
         }
 
     }

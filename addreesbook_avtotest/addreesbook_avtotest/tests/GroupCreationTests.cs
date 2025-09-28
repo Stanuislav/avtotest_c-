@@ -79,5 +79,20 @@ namespace WebAdressbokkTests
             newGroups.Sort();
             Assert.That(oldGroups, Is.EqualTo(newGroups));
         }
+
+        [Test]
+        public void TestDBConnectivity()
+        {
+            DateTime start = DateTime.Now;
+            List<GroupData> fronUi= app.Groups.GetGroupList();
+            DateTime end = DateTime.Now;
+            Console.WriteLine("UI " + end.Subtract(start));
+
+
+             start = DateTime.Now;
+             List<GroupData> fronDB = GroupData.GetAll();
+             end = DateTime.Now;
+            Console.WriteLine("DB " + end.Subtract(start));
+        }
     }
 }
