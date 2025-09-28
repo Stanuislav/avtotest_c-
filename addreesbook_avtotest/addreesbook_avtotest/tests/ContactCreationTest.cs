@@ -6,13 +6,16 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+using System.Xml;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace WebAdressbokkTests
 { 
     [TestFixture]
     public class ContactCreationTests : AuthTestBase
     {
-        public static IEnumerable<ContactData> RandomGroupDataProvider()
+        public static IEnumerable<ContactData> RandomContactDataProvider()
         {
             List<ContactData> contact = new List<ContactData>();
             for (int i = 0; i < 5; i++)
@@ -26,24 +29,25 @@ namespace WebAdressbokkTests
             return contact;
         }
 
-        public static IEnumerable<GroupData> ContactDataFromFile()
+
+        public static IEnumerable<ContactData> ContactDataFromXmlFile()
         {
-            List<GroupData> groups = new List<GroupData>();
-            string[] lines = File.ReadAllLines(@"groups.csv");
-            foreach (string line in lines)
-            {
-                string[] part = line.Split(',');
-                groups.Add(new GroupData(part[0])
-                {
-                    Header = part[1],
-                    Footer = part[2]
-                });
-            }
-            return groups;
+
+            return (List<ContactData>)
+                new XmlSerializer(typeof(List<ContactData>))
+                .Deserialize(new StreamReader(@"contact.xml"));
+
+        }
+
+        public static IEnumerable<ContactData> ContactDataFromJsonFile()
+        {
+
+            return JsonConvert.DeserializeObject<List<ContactData>>(File.ReadAllText(@"contact.json"));
+
         }
 
 
-        [Test, TestCaseSource("ContactDataFromFile")]
+        [Test, TestCaseSource("ContactDataFromXmlFile")]
         public void ContactCreationTest(ContactData contact)
         {
             List<ContactData> oldContacts = app.Contacts.GetContactList();

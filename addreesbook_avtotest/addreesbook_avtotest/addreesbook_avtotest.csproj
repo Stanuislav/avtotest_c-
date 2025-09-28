@@ -27,6 +27,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="contact.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="contact.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="group.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
