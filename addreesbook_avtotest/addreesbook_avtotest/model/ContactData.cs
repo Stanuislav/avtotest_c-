@@ -95,6 +95,8 @@ namespace WebAdressbokkTests
         [Column(Name = "email3"), NotNull]
         public string Email3 { get; set; }
 
+  
+
         public string AllPhons {
             get 
             { 

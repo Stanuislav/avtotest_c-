@@ -100,6 +100,7 @@ namespace WebAdressbokkTests
         {
             foreach (ContactData contact in GroupData.GetAll()[0].GetContacts())
             {
+                
                 Console.WriteLine(contact);
             }
         }
