@@ -147,11 +147,23 @@ namespace WebAdressbokkTests
         public ContactData GetContactDetailsInformationsForm(int index)
         {
             manager.Navigation.OpenHomePage();
+            SelectModificationContact(index);
+            string addressM = driver.FindElement(By.Name("address")).GetAttribute("value");
+            string email1M = driver.FindElement(By.Name("email")).GetAttribute("value");
+            string email2M = driver.FindElement(By.Name("email2")).GetAttribute("value");
+            string email3M = driver.FindElement(By.Name("email3")).GetAttribute("value");
+
+
+            manager.Navigation.OpenHomePage();
             SelectDetailsContact(index);
 
             string homePhone = string.Empty;
             string mobilePhone = string.Empty;
             string workPhone = string.Empty;
+            string address = string.Empty;
+            string email1 = string.Empty;
+            string email2 = string.Empty;
+            string email3 = string.Empty;
 
             string fullText = driver.FindElement(By.Id("content")).Text;
 
@@ -177,12 +189,25 @@ namespace WebAdressbokkTests
                 {
                     workPhone = lines[i].Replace("W:", "").Trim();
                 }
+                else if (lines[i] == addressM)
+                {
+                    address = addressM;
+                }
+                else if (lines[i]== email1M)
+                {
+                    email1 = email1M;
+                }
+                else if (lines[i] == email2M)
+                {
+                    email2 = email2M;
+                }
+                else if (lines[i] == email3M)
+                {
+                    email3 = email3M;
+                }
             }
 
-
-            string email1 = GetEmailText("eman1");
-            string email2 = GetEmailText("eman2");
-            string email3 = GetEmailText("eman3");
+           
 
             return new ContactData("", "")
             {
@@ -192,7 +217,8 @@ namespace WebAdressbokkTests
                 WorkPhone = workPhone,
                 Email1 = email1,
                 Email2 = email2,
-                Email3 = email3
+                Email3 = email3,
+                Address = address
             };
         }
 
