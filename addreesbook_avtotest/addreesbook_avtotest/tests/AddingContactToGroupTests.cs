@@ -13,15 +13,78 @@ namespace WebAdressbokkTests
         [Test]
         public void TestAddingContactToGroup()
         {
-            GroupData group = GroupData.GetAll()[0];
-            List<ContactData> odlList = group.GetContacts();
-            ContactData contact =  ContactData.GetAll().Except(odlList).First();
+
+            GroupData groupData = new GroupData("fistForttest");
+            GroupData newGroupData = new GroupData("fistForttest1");
+            ContactData contactData = new ContactData("stas", "shut");
+
+            List<GroupData> groups = GroupData.GetAll();
+
+            if (groups.Count == 0 )
+            {
+                app.Groups.Create(groupData);
+            }
+
+            // GroupData group = groups[0];
+            GroupData targetGroup = null;
+            ContactData targetContact = null;
+
+            List <ContactData> contacts = ContactData.GetAll();
+            if (contacts.Count == 0)
+            {
+                app.Contacts.Create(contactData);
+            }
 
 
-            app.Contacts.AddContactToGroup(contact, group);
+            foreach (GroupData group in groups)
+            {
+                List<ContactData> contactsInGroup = group.GetContacts();
+                List<ContactData> contactsNotInGroup = contacts.Except(contactsInGroup).ToList();
+                
+                if (contactsNotInGroup.Count > 0)
+                {
+                    targetGroup = group;
+                    targetContact = contactsNotInGroup.First();
+                    break;
+                }
+            }
 
-            List<ContactData> newList = group.GetContacts();
-            odlList.Add(contact);
+            if (targetGroup == null)
+            {
+                foreach (GroupData group in groups)
+                {
+                    List<ContactData> contactsInGroup = group.GetContacts();
+                    if (contactsInGroup.Count > 0)
+                    {
+                        targetGroup = group;
+                        targetContact = contactsInGroup.First();
+
+
+                        app.Contacts.RemoveContactToGroup(targetContact, targetGroup);
+                        break;
+                    }
+                }
+            }
+
+            if (targetGroup == null)
+            {
+                app.Groups.Create(newGroupData);
+                groups = GroupData.GetAll();
+                targetGroup = groups.Last();
+                targetContact = contacts.First();
+            }
+
+
+            List<ContactData> odlList = targetGroup.GetContacts();
+
+
+            //ContactData contact =  ContactData.GetAll().Except(odlList).First();
+
+
+            app.Contacts.AddContactToGroup(targetContact, targetGroup);
+
+            List<ContactData> newList = targetGroup.GetContacts();
+            odlList.Add(targetContact);
             newList.Sort();
             odlList.Sort();
             Assert.That(odlList, Is.EqualTo(newList));
