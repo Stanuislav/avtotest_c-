@@ -14,6 +14,11 @@ namespace WebAdressbokkTests
     {
         public string allPhons;
         public string fio;
+        public string fullAddress;
+        public string fullPhome;
+        public string fullEmail;
+        public string fullText;
+
 
         public ContactData(string firstname, string lastname)
         {
@@ -151,6 +156,109 @@ namespace WebAdressbokkTests
             }
             return fio + " ";
         }
+
+
+        public string FullAddress
+        {
+            get
+            {
+                if (fullAddress != null)
+                {
+                    return fullAddress;
+                }
+                else
+                {
+                    return ClenUpAddress(Address).Trim();
+                }
+            }
+            set
+            {
+                fullAddress = value;
+            }
+        }
+
+
+        private string ClenUpAddress(string address)
+        {
+            if (address == null || address == "")
+            {
+                return "";
+            }
+            return address + "";
+        }
+
+
+
+
+
+
+
+        public string FullText
+        {
+            get
+            {
+                if (fullText != null)
+                {
+                    return fullText;
+                }
+                else
+                {
+                    var parts = new List<string>();
+
+                    
+                    if (!string.IsNullOrEmpty(FirstName) || !string.IsNullOrEmpty(LastName))
+                        parts.Add($"{FirstName} {LastName}".Trim());
+
+                    
+                    if (!string.IsNullOrEmpty(Address))
+                        parts.Add(Address.Trim());
+
+                    
+                    var phones = new List<string>();
+                    if (!string.IsNullOrEmpty(HomePhone))
+                        phones.Add($"H: {HomePhone}");
+                    if (!string.IsNullOrEmpty(MobilePhone))
+                        phones.Add($"M: {MobilePhone}");
+                    if (!string.IsNullOrEmpty(WorkPhone))
+                        phones.Add($"W: {WorkPhone}");
+
+                    if (phones.Count > 0)
+                        parts.AddRange(phones);
+
+                    
+                    var emails = new List<string>();
+                    if (!string.IsNullOrEmpty(Email1))
+                        emails.Add(Email1);
+                    if (!string.IsNullOrEmpty(Email2))
+                        emails.Add(Email2);
+                    if (!string.IsNullOrEmpty(Email3))
+                        emails.Add(Email3);
+
+                    if (emails.Count > 0)
+                        parts.AddRange(emails);
+
+                    return string.Join("\r\n", parts);
+                }
+            }
+            set
+            {
+                fullText = value;
+            }
+        }
+
+
+        private string ClenUpFullText(string address)
+        {
+            if (address == null || address == "")
+            {
+                return "";
+            }
+            return address + "";
+        }
+
+
+
+
 
 
         public static List<ContactData> GetAll()

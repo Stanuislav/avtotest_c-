@@ -144,7 +144,7 @@ namespace WebAdressbokkTests
             };
         }
 
-        public ContactData GetContactDetailsInformationsForm(int index)
+        public ContactData GetContactDetailsInformationsForm1(int index)
         {
             manager.Navigation.OpenHomePage();
             SelectModificationContact(index);
@@ -221,6 +221,26 @@ namespace WebAdressbokkTests
                 Address = address
             };
         }
+
+
+
+        public ContactData GetContactDetailsInformationsForm(int index)
+        {
+            manager.Navigation.OpenHomePage();
+            SelectDetailsContact(index);
+
+            
+
+            string fullText = driver.FindElement(By.Id("content")).Text;
+
+
+            return new ContactData()
+            {
+                FullText = fullText,
+
+            };
+        }
+
 
         private string GetEmailText(string emailValue)
         {
